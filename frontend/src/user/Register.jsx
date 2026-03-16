@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import {register, removeSuccess} from '../features/user/userSlice';
+import {register, removeSuccess, removeErrors} from '../features/user/userSlice';
+
 
 
 const Register = () => {
@@ -77,7 +78,7 @@ dispatch(register(myForm))
                     <input type='Password' placeholder='Password' name='password'value={password} onChange={registerDataChange} />  
                 </div>
                 <div className='input-group avatar-group'>
-                    <input type='file' placeholder='Avatar' className='file-input' accept='image/'onChange={registerDataChange} />  
+                    <input type='file' placeholder='Avatar' className='file-input'name='avatar' accept='image/*'onChange={registerDataChange} />  
                  <img src={avatarPreview} alt='Avatar preview'className='avatar'/>
                 </div>
                 <button type='submit' className='authBtn'>Sign Up</button>
