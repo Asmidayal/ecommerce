@@ -45,11 +45,12 @@ const userSlice= createSlice({
  reducers:{
         removeErrors:(state)=>{
             state.error=null;
-        }
-    },
+        },
+    
     removeSuccess:(state)=>{
         state.success=null;
     },
+},
      // registration cases
     extraReducers:(builder)=>{
         builder.addCase(register.pending,(state)=>{
