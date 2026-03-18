@@ -81,7 +81,7 @@ dispatch(register(myForm))
                     <input type='file' placeholder='Avatar' className='file-input'name='avatar' accept='image/*'onChange={registerDataChange} />  
                  <img src={avatarPreview} alt='Avatar preview'className='avatar'/>
                 </div>
-                <button type='submit' className='authBtn'>Sign Up</button>
+                <button type='submit' className='authBtn'>{loading?'Signing Up':'Sign Up'}</button>
                 <p className='form-links'>Already have an account? <Link to='/login'>SignIn here</Link></p>
             </form>
         </div>
