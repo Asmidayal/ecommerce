@@ -28,9 +28,27 @@ export const login=createAsyncThunk('user/login',async({email,password},{rejectW
     console.log('Login data',data);
     return data;
 } catch (error) {
-     return rejectWithValue(error.response?.data||"An error occurred");
+     return rejectWithValue(error.response?.data||"An error occurred,Login failed");
 }  
 
+})
+export const loadUser=createAsyncThunk('user/loadUser',async(_,{rejectWithValue})=>{
+ try{
+const {data}=await axios.get('/api/v1/profile');
+return data;
+ }
+  catch (error) {
+     return rejectWithValue(error.response?.data||"An error occurred,Load user failed");
+}  
+})
+export const logout=createAsyncThunk('user/logout',async(_,{rejectWithValue})=>{
+ try{
+const {data}=await axios.post('/api/v1/logout',{withCredentials:true});
+return data;
+ }
+  catch (error) {
+     return rejectWithValue(error.response?.data||"logout failed");
+}  
 })
 
 const userSlice= createSlice({
@@ -84,13 +102,48 @@ const userSlice= createSlice({
      } )
       .addCase(login.rejected,(state,action)=>{
          state.loading=false;
-                       state.error=action.payload?.message||"An error occurred"
+                       state.error=action.payload?.message||"An error occurred,Login failed"
                        state.user=null;
                        state.isAuthenticated=false
       })  
-        
-        
-
+        //loading user
+       builder.addCase(loadUser.pending,(state)=>{
+                  state.loading=true;
+                       state.error=null;
+                        })
+        .addCase(loadUser.fulfilled,(state,action)=>{
+            state.loading=false;
+                       state.error=null;
+                       //state.success=action.payload.success;
+                       state.user=action.payload?.user || null;
+                       state.isAuthenticated=Boolean(action.payload?.user)
+     } )
+      .addCase(loadUser.rejected,(state,action)=>{
+         state.loading=false;
+                       state.error=action.payload?.message||"An error occurred,Load user failed"
+                       state.user=null;
+                       state.isAuthenticated=false
+      })  
+     //logut cases     
+ builder.addCase(logout.pending,(state)=>{
+                  state.loading=true;
+                       state.error=null;
+                        })
+        .addCase(logout.fulfilled,(state,action)=>{
+            state.loading=false;
+                       state.error=null;
+                       //state.success=action.payload.success;
+                       state.user= null;
+                       state.isAuthenticated=false
+     } )
+      .addCase(logout.rejected,(state,action)=>{
+         state.loading=false;
+                       state.error=action.payload?.message||"logout failed"
+                       state.user=null;
+                       state.isAuthenticated=false
+      })  
+       
+          
     }
 
 })

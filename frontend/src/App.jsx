@@ -5,11 +5,23 @@ import ProductDetails from './pages/ProductDetails';
 import Products from './pages/Products';
 import Register from './user/Register';
 import Login from './user/Login';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { loadUser } from './features/user/userSlice';
+import UserDashboard from './user/UserDashboard';
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 //import './App.css'
 
 function App() {
+  const {isAuthenticated,user}=useSelector(state=>state.user);
+const dispatch=useDispatch();
+useEffect(()=>{
+  if(isAuthenticated){
+    dispatch(loadUser());
+  }
+},[dispatch])
+console.log(isAuthenticated,user);
   return (
 <Router>
   <Routes>
@@ -20,6 +32,7 @@ function App() {
             <Route path ="/register" element={<Register/>}/>
              <Route path ="/login" element={<Login/>}/>
   </Routes>
+  {isAuthenticated && <UserDashboard user={user}/>}
 </Router>
   )
 }

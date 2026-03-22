@@ -8,13 +8,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import '../componentStyles/Navbar.css'
 import'../pageStyles/Search.css'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Navbar = () => {
     const [isMenuOpen, setMenuOpen] = React.useState(false);
     const[isSearchOpen, setSearchOpen] = React.useState(false);
     const[searchQuery, setSearchQuery] = React.useState('');
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
     const toggleSearch = () => setSearchOpen(!isSearchOpen);
-    const isAuthenticated = false; // Replace with actual authentication logic
+    const {isAuthenticated}=useSelector(state=>state.user);
     const navigate=useNavigate();
     const handleSearchSubmit = (e) => {
         e.preventDefault();
