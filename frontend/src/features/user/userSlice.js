@@ -73,6 +73,7 @@ const userSlice= createSlice({
     error:null,
     success:false,
     isAuthenticated:false,
+    message:null
 },
  reducers:{
         removeErrors:(state)=>{
@@ -156,7 +157,24 @@ const userSlice= createSlice({
                        state.user=null;
                        state.isAuthenticated=false
       })  
-       
+      //updating profile cases
+      builder.addCase(updateProfile.pending,(state)=>{
+                  state.loading=true;
+                       state.error=null;
+                        })
+        .addCase(updateProfile.fulfilled,(state,action)=>{
+            state.loading=false;
+                       state.error=null
+                          state.user=action.payload?.user||null
+                        state.success=action.payload?.success
+                         state.message=action.payload?.message
+                       
+     } )
+      .addCase(updateProfile.rejected,(state,action)=>{
+         state.loading=false;
+                       state.error=action.payload?.message||"update failed"
+                    
+      })   
           
     }
 
