@@ -50,6 +50,20 @@ return data;
      return rejectWithValue(error.response?.data||"logout failed");
 }  
 })
+export const updateProfile=createAsyncThunk('user/updateProfile',async(userData,{rejectWithValue})=>{
+ try{
+     const config={
+        headers:{
+            'Content-type':'multipart/form-data'
+        }
+    }
+const {data}=await axios.put('/api/v1/profile/update',userData,config);
+return data;
+ }
+  catch (error) {
+     return rejectWithValue(error.response?.data||{message:'profile update failed'});
+}  
+})
 
 const userSlice= createSlice({
     name:'user',

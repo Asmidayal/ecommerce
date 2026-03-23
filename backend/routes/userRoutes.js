@@ -9,7 +9,7 @@ router.route('/logout').post(logoutUser);
 router.route('/password/forgot').post(requestPasswordReset);
 router.route('/reset/:token').post(resetPassword);
 router.route('/profile').get(VerifyUserAuth,userDetails);
-router.route('/password/update').post(VerifyUserAuth,updatePassword);
+router.route('/password/update').put(VerifyUserAuth,updatePassword);
 router.route('/profile/update').post(VerifyUserAuth,updateProfile);
 router.route('/admin/users').get(VerifyUserAuth,roleBasedAccess("admin"),getUsersList);
 router.route('/admin/user/:id')
