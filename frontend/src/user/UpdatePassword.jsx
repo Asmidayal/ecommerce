@@ -18,6 +18,7 @@ const UpdatePassword = () => {
         const[newPassword,setNewPassword]=useState('');
          const[confirmPassword,setConfirmPassword]=useState('');
     const updatePasswordSubmit=(e)=>{
+         e.preventDefault();
           const myForm=new FormData();
     myForm.set('oldPassword',oldPassword);
       myForm.set('newPassword',newPassword);
