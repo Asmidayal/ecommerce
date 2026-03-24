@@ -12,6 +12,7 @@ import UserDashboard from './user/UserDashboard';
 import Profile from './user/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 import UpdateProfile from './user/UpdateProfile';
+import UpdatePassword from './user/UpdatePassword';
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 //import './App.css'
@@ -36,7 +37,8 @@ console.log(isAuthenticated,user);
              <Route path ="/login" element={<Login/>}/>
               <Route path ="/profile" element={<ProtectedRoute element={<Profile/>}/>}/>
                 <Route path ="/profile/update" element={<ProtectedRoute element={<UpdateProfile/>}/>}/>
-  </Routes>
+                 <Route path ="/password/update" element={<ProtectedRoute element={<UpdatePassword/>}/>}/>
+  </Routes> 
   {isAuthenticated && <UserDashboard user={user}/>}
 </Router>
   )

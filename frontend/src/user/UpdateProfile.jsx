@@ -63,7 +63,7 @@ const UpdateProfile = () => {
    <div className='container update-container'>
     <div className='form-content'>
         <form className='form'encType='multipart/form-data'onSubmit={updateSubmit}>
-        <h2>profile update</h2>
+        <h2>update profile</h2>
     <div className='input-group avatar-group'>
         <input type='file' accept='/image' className='file-input' name='avatar' onChange={profileImageUpdate}/>
         < img src={avatarPreview} alt='user profile' className='avatar'/>
