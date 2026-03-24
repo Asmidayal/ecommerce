@@ -64,6 +64,20 @@ return data;
      return rejectWithValue(error.response?.data||{message:'profile update failed'});
 }  
 })
+export const updatePassword=createAsyncThunk('user/updatePassword',async(formData,{rejectWithValue})=>{
+ try{
+     const config={
+        headers:{
+            'Content-type':'application/json'
+        }
+    }
+const {data}=await axios.put('/api/v1/password/update',formData,config);
+return data;
+ }
+  catch (error) {
+     return rejectWithValue(error.response?.data||'password update failed');
+}  
+})
 
 const userSlice= createSlice({
     name:'user',
@@ -173,6 +187,24 @@ const userSlice= createSlice({
       .addCase(updateProfile.rejected,(state,action)=>{
          state.loading=false;
                        state.error=action.payload?.message||"update failed"
+                    
+      })  
+      //update password 
+      builder.addCase(updatePassword.pending,(state)=>{
+                  state.loading=true;
+                       state.error=null;
+                        })
+        .addCase(updatePassword.fulfilled,(state,action)=>{
+            state.loading=false;
+                       state.error=null
+                           state.success=action.payload?.success
+                         
+                       
+     } )
+      .addCase(updatePassword.rejected,(state,action)=>{
+         state.loading=false;
+                       state.error=action.payload?.message || "password update failed"
+    
                     
       })   
           
