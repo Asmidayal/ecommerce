@@ -70,7 +70,7 @@ userSchema.pre("save",async function(){
  userSchema.methods.generatePasswordResetToken=function(){
 const resetToken= crypto.randomBytes(20).toString(`hex`);
 this.resetPasswordToken=crypto.createHash("sha256").update(resetToken).digest("hex");
-this.resetPasswordExpire=Date.now()+30*60*1000;//30min
+this.resetPasswordExpire=Date.now()+60*60*1000;//60min
 return resetToken;
  }
 export default mongoose.model("User", userSchema);
