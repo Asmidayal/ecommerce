@@ -12,6 +12,7 @@ import { getProductDetails } from '../features/productSlice';
 import { removeErrors } from '../features/productSlice';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
+import { addItemsToCart, removeMessage } from '../features/cart/CartSlice';
 
 
 const ProductDetails = () => {
@@ -22,6 +23,8 @@ const ProductDetails = () => {
             setUserRating(newRating);
             } 
           const{loading,error,product} = useSelector((state)=>state.product);
+          const{loading:cartLoading,error:cartError,success,message,cartItems}= useSelector((state)=>state.cart);
+          console.log(cartItems);
           const dispatch=useDispatch();
           const{id}=useParams();//to get product id from url(url in home.jsx), to make product pages dynamic
           useEffect(()=>{
@@ -38,6 +41,19 @@ const ProductDetails = () => {
                       dispatch(removeErrors()); //dispatching action to remove error from state after showing error message
                   }
                   },[dispatch,error])
+                   useEffect(()=>{
+                  if(cartError){
+                      toast.error(cartError,{autoClose:3000});
+                      dispatch(removeErrors()); //dispatching action to remove error from state after showing error message
+                  }
+                  },[dispatch,cartError])
+                  
+                   useEffect(()=>{
+                  if(success){
+                      toast.error(message,{autoClose:3000});
+                      dispatch(removeMessage()); //dispatching action to remove error from state after showing error message
+                  }
+                  },[dispatch,message,success])
                   if(loading){
                     return(
                         <>
@@ -72,6 +88,9 @@ const ProductDetails = () => {
                         }
                     setQuantity(qty=>qty+1)
                   }
+                  const addToCart=()=>{
+                    dispatch(addItemsToCart({id,quantity}))
+                  }
         
           return (
    <>
@@ -100,7 +119,7 @@ const ProductDetails = () => {
                     <input type='text' value={quantity} className='quantity-value' readOnly/>
                     <button className='quantity-button' onClick={increaseQuantity}>+</button>
                 </div>
-                <button className='add-to-cart-btn'onClick={addToCart}>Add to Cart
+                <button className='add-to-cart-btn'onClick={addToCart} disabled={cartLoading}>{cartLoading?'Adding':'Add to Cart'}
                 </button>
                 </>)}
                 <form className='review-form'>
