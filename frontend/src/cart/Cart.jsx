@@ -3,8 +3,12 @@ import '../CartStyles/Cart.css'
 import PageTitle from '../components/PageTitle'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import CartItem from './CartItem'
+import { useSelector } from 'react-redux'
 
 const Cart = () => {
+    const{cartItems}=useSelector(state=>state.cart);
+    console.log(cartItems);
   return (
     <>
     <PageTitle title='Your Cart'/>
@@ -20,7 +24,8 @@ const Cart = () => {
                     <div className='header-action'>Actions</div>
                 </div>
                 {/* cart items*/}
-                <div className='cart-item'>
+               {cartItems&& cartItems.map(item=><CartItem item={item} key={item.name}/>)}
+              {/*<div className='cart-item'>
                     <div className='item-info'>
                         <img src="" alt="Product Image" className='item-image'/>
                         <div className='item-details'>
@@ -43,7 +48,7 @@ const Cart = () => {
                             <button className='update-item-btn'>Update</button>
                             <button className='remove-item-btn'>Remove</button>
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
             {/* cart summary*/}
