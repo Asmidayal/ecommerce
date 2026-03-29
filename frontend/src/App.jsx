@@ -15,6 +15,7 @@ import UpdateProfile from './user/UpdateProfile';
 import UpdatePassword from './user/UpdatePassword';
 import ForgotPassword from './user/ForgotPassword';
 import ResetPassword from './user/ResetPassword';
+import Cart from './cart/Cart';
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 //import './App.css'
@@ -42,6 +43,7 @@ console.log(isAuthenticated,user);
                  <Route path ="/password/update" element={<ProtectedRoute element={<UpdatePassword/>}/>}/>
                   <Route path ="/password/forgot" element={<ForgotPassword/>}/>
                       <Route path ="/reset/:token" element={<ResetPassword/>}/>
+                        <Route path ="/cart" element={<Cart/>}/>
   </Routes> 
   {isAuthenticated && <UserDashboard user={user}/>}
 </Router>
