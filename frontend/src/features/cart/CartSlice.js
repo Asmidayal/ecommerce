@@ -27,7 +27,8 @@ const cartSlice=createSlice({
         loading:false,
         error:null,
         success:false,
-        message:null
+        message:null,
+        removingId:null
     },
     reducers:{
         removeErrors:(state)=>{
@@ -35,8 +36,15 @@ const cartSlice=createSlice({
         },
         removeMessage:(state)=>{
             state.message=null;
-        }
+        },
+        removeItemFromCart:(state,action)=>{
+          state.removingId=action.payload;
+          console.log(state.removingId);
+          state.cartItems=state.cartItems.filter(item=>item.product!==action.payload);
+         localStorage.setItem('cartItems',JSON.stringify(state.cartItems));
+         state.removingId=null;
     },
+  },
     extraReducers:(builder)=>{
         // add items to cart
             builder.addCase(addItemsToCart.pending,(state)=>{
@@ -68,5 +76,5 @@ const cartSlice=createSlice({
                         }
 
 })
-export const {removeErrors,removeMessage}= cartSlice.actions;
+export const {removeErrors,removeMessage,removeItemFromCart}= cartSlice.actions;
 export default cartSlice.reducer;
