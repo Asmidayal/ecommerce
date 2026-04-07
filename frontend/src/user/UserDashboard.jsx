@@ -60,7 +60,7 @@ function UserDashboard  ({user})  {
         </div>
   { menuVisible &&( <div className='menu-options'>
         {options.map((item)=>(
-        <button key={item.name}className='menu-option-btn'onClick={item.funcName}>{item.name}</button>
+        <button key={item.name}className={`menu-option-btn ${item.isCart?(cartItems.length>0?'cart-not-empty':''):''}`}onClick={item.funcName}>{item.name}</button>
 ))}
     </div>)}
       
