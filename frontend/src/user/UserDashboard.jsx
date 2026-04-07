@@ -5,7 +5,9 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import '../features/user/userSlice';
 import { logout,removeSuccess } from '../features/user/userSlice';
+import { useSelector } from 'react-redux';
 function UserDashboard  ({user})  {
+    const {cartItems}=useSelector(state=>state.cart);
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const[menuVisible,setMenuVisible]=useState(false);
@@ -15,6 +17,7 @@ function UserDashboard  ({user})  {
     const options=[
         {name:'Orders',funcName:orders},
           {name:'Account',funcName:profile},
+          {name:`Cart (${cartItems.length})`, funcName:myCart,isCart:true},
             {name:'LogOut',funcName:logoutUser}
     ]
     if(user.role==='admin'){
@@ -29,6 +32,9 @@ function UserDashboard  ({user})  {
      function profile(){
     navigate('/profile')
     }
+        function myCart(){
+    navigate('/cart')
+        }
      function logoutUser(){
     dispatch(logout())
     .unwrap()//converting action to promise

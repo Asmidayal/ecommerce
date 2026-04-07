@@ -10,6 +10,10 @@ import { Link } from 'react-router-dom'
 const Cart = () => {
     const{cartItems}=useSelector(state=>state.cart);
     console.log(cartItems);
+    const subtotal=cartItems.reduce((acc,item)=>acc+item.price*item.quantity,0);
+    const tax=subtotal*0.18;
+    const shipping= subtotal>500?0:50;
+    const total=subtotal+tax+shipping;
   return (
     <>
       <Navbar/>
@@ -64,19 +68,19 @@ const Cart = () => {
                 <div className='price-summary-heading'>price summary</div>
                 <div className='summary-item'>
                     <p className='summary-label'>Subtotal:</p>
-                    <p className='summary-value'>₹200/-</p>
+                    <p className='summary-value'>{subtotal}/-</p>
             </div>
                <div className='summary-item'>
                     <p className='summary-label'>Tax(18%)</p>
-                    <p className='summary-value'>10/-</p>
+                    <p className='summary-value'>{tax}/-</p>
             </div>
                <div className='summary-item'>
                     <p className='summary-label'>Shipping:</p>
-                    <p className='summary-value'>₹50/-</p>
+                    <p className='summary-value'>{shipping}/-</p>
             </div>
                <div className='summary-total'>
                     <p className='total-label'>Total:</p>
-                    <p className='total-value'>₹260/-</p>
+                    <p className='total-value'>{total}/-</p>
             </div>
             <button className='checkout-btn'>Proceed to Checkout</button>
         </div>

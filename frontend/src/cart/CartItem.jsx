@@ -8,6 +8,8 @@ const CartItem = ({item}) => {
     const{loading,error,success,message,cartItems}= useSelector(state=>state.cart);
     const dispatch=useDispatch();
     const[quantity,setQuantity]=useState(item.quantity);
+    //const subtotal=cartItems.reduce((acc,item)=>acc+item.price*item.quantity,0);
+    
      const decreaseQuantity=()=>{
                         if(quantity<=1){
                              toast.error('quantity cannot be less than 1',{position:'top-center',autoClose:3000});
