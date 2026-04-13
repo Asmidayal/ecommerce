@@ -6,6 +6,8 @@ import order from './routes/orderRoutes.js';
 import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
 import dotenv from 'dotenv';
+import payment from './routes/paymentRoute.js';
+
 //app.use to use cookie parser middleware
 
 const app = express()
@@ -17,6 +19,7 @@ app.use(express.json());//to accept json data
 app.use('/api/v1', product);
 app.use('/api/v1', user);
 app.use('/api/v1',order);
+app.use('/api/v1',payment);
 app.use(errorHandleMiddleware);
 dotenv.config({path:'backend/config/config.env'});
 //module.exports = app;
