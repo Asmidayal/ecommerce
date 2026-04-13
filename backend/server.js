@@ -4,6 +4,7 @@ import { connectDB } from './config/db.js';
 // Setting up config file
 dotenv.config({ path: 'backend/config/config.env' });
 import {v2 as cloudinary} from 'cloudinary';
+import Razorpay from 'razorpay';
 connectDB();
 cloudinary.config({
   cloud_name:process.env.CLOUDINARY_NAME,
@@ -16,6 +17,10 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 const port = process.env.PORT || 5000;
+export const instance = new Razorpay({
+  key_id: process.env.RAZORPAY_API_KEY,
+  key_secret: process.env.RAZORPAY_API_SECRET
+});
 
 
 
