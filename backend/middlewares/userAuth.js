@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.js"; //for user to access all products
 import handleError from "../utils/handleError.js";
 export const VerifyUserAuth= handleAsyncErrors(async(req, res, next) => {
-    const {token}= req.cookies;
+    const {token}= req.cookies; // for postman we use headers and for frontend we use cookies
    // console.log(token);
 
 //if no token present in cookies
