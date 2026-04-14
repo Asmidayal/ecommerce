@@ -46,9 +46,11 @@ const OrderConfirm = () => {
                 </tr>
             </thead>
             <tbody>
+                <tr>
                 <td>{user.name}</td>
                 <td>{shippingInfo.phoneNumber}</td>
                 <td>{shippingInfo.address}, {shippingInfo.city}, {shippingInfo.state}, {shippingInfo.country} - {shippingInfo.pincode}</td>
+                </tr>
             </tbody>
 
         </table>

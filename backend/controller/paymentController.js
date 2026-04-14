@@ -1,5 +1,6 @@
 import { instance } from "../server.js";
 import handleAsyncErrors from "../middlewares/handleAsyncErrors.js";
+import crypto from 'crypto';
 
 export const processPayment=handleAsyncErrors(async(req,res)=>{
     const options={
@@ -18,4 +19,13 @@ export const processPayment=handleAsyncErrors(async(req,res)=>{
        key: process.env.RAZORPAY_API_KEY,
 
     })
+    })
+ export const paymentVerification=handleAsyncErrors(async(req,res)=>{
+    const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body;
+    const body=razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSignature=crypto.createHmac('sha256',process.env.RAZORPAY_API_SECRET).update(body.toString()).digest('hex');
+   res.status(200).json({
+       success:true,
+
+   })
     })
