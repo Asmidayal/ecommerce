@@ -1,6 +1,7 @@
 import { instance } from "../server.js";
 import handleAsyncErrors from "../middlewares/handleAsyncErrors.js";
 import crypto from 'crypto';
+import Razorpay from "razorpay";
 
 export const processPayment=handleAsyncErrors(async(req,res)=>{
     const options={
@@ -23,9 +24,24 @@ export const processPayment=handleAsyncErrors(async(req,res)=>{
  export const paymentVerification=handleAsyncErrors(async(req,res)=>{
     const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body;
     const body=razorpay_order_id + "|" + razorpay_payment_id;
+  //  console.log("order id ",razorpay_order_id);
+   // console.log("payment id ",razorpay_payment_id);
     const expectedSignature=crypto.createHmac('sha256',process.env.RAZORPAY_API_SECRET).update(body.toString()).digest('hex');
-   res.status(200).json({
+   // console.log("sig received ",razorpay_signature);
+   // console.log("sig generated ",expectedSignature);
+   const isAuthentic=expectedSignature===razorpay_signature;
+    if(isAuthentic){
+         return res.status(200).json({
        success:true,
-
+       message:"Payment verified successfully",
+       reference:razorpay_payment_id
    })
+        }else{
+            return res.status(200).json({
+                success:false,
+                message:"Payment verification failed"
+            })
+
+        }
+  
     })

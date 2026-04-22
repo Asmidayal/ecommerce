@@ -19,6 +19,7 @@ import Cart from './cart/Cart';
 import Shipping from './cart/Shipping';
 import OrderConfirm from './cart/OrderConfirm';
 import Payment from './cart/Payment';
+import PaymentSuccess from './cart/PaymentSuccess';
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 //import './App.css'
@@ -50,7 +51,9 @@ console.log(isAuthenticated,user);
                         <Route path ="/shipping" element={<ProtectedRoute element={<Shipping/>}/>}/>
                         <Route path ="/order/confirm" element={<ProtectedRoute element={<OrderConfirm/>}/>}/>
                          <Route path ="/process/payment" element={<ProtectedRoute element={<Payment/>}/>}/>
+                          <Route path ="/paymentSuccess" element={<ProtectedRoute element={<PaymentSuccess/>}/>}/>
   </Routes> 
+  
   {isAuthenticated && <UserDashboard user={user}/>}
 </Router>
   )

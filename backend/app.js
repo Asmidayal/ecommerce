@@ -13,7 +13,8 @@ import payment from './routes/paymentRoute.js';
 const app = express()
 //MIDDLEWARE
 app.use(express.json());//to accept json data
- app.use(cookieParser()); 
+ app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); 
  app.use(fileUpload());
 //to activate routes
 app.use('/api/v1', product);
