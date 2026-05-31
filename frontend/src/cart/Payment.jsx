@@ -56,6 +56,7 @@ const Payment = () => {
         },
       };
     const rzp = new window.Razorpay(options);
+    sessionStorage.setItem('orderItem', JSON.stringify(orderItem));
       rzp.open();
     }catch(error){
       toast.error(error.message,{autoclose:3000});

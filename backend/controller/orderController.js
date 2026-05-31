@@ -5,7 +5,7 @@ import handleError from "../utils/handleError.js";
 import handleAsyncErrors from "../middlewares/handleAsyncErrors.js";
 
 //create new order
-export const newOrder= handleAsyncErrors(async (req,res,next) => {
+export const CreatenewOrder= handleAsyncErrors(async (req,res,next) => {
  const{shippingInfo,orderItems,paymentInfo,itemPrice,taxPrice,shippingPrice,totalPrice}=req.body;
  const order= await Order.create({
     shippingInfo,
