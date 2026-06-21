@@ -11,6 +11,8 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { createOrder } from '../features/order/orderSlice';
 import { removeSuccess, removeErrors } from '../features/order/orderSlice';
+import { clearCart } from '../features/cart/CartSlice';
+import Loader from '../components/Loader'
 
 const PaymentSuccess = () => {
     const [searchParams] = useSearchParams();
@@ -57,10 +59,11 @@ const PaymentSuccess = () => {
      }
     }
     createOrderData();
-    },[dispatch, reference])
+    },[])
     useEffect(()=>{
       if(success){
         toast.success("Order created successfully!",{position:'top-center',autoClose:3000});
+        dispatch(clearCart());
         dispatch(removeSuccess());
       }
     },[success, dispatch])
@@ -72,6 +75,7 @@ const PaymentSuccess = () => {
     },[error, dispatch])
   return (
     <>
+   {loading ? (<Loader/>) : (<>
     <PageTitle title="Payment Status"/>
     <Navbar/>
     <div className="payment-success-container">
@@ -85,6 +89,7 @@ const PaymentSuccess = () => {
       </div>
     </div>
     <Footer/>
+    </>)}
     </>
   )
 }
