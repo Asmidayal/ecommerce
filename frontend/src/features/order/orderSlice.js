@@ -27,7 +27,18 @@ export const getAllOrders = createAsyncThunk('order/getAllOrders', async(_, {rej
      catch(error){
         return rejectWithValue(error.response?.data||"failed to fetch order");
     }
-})
+}),
+//get order details
+export const getOrderDetails = createAsyncThunk('order/getOrderDetails', async(orderID, {rejectWithValue})=>{
+    try{
+    const {data} = await axios.get(`/api/v1/order/${orderID}`);
+    return data;
+    
+}
+     catch(error){
+        return rejectWithValue(error.response?.data||"failed to fetch order");
+    }
+});
 
 const orderSlice = createSlice({
     name:'order',
@@ -72,6 +83,20 @@ const orderSlice = createSlice({
             state.success=action.payload.success;
         })
         .addCase(getAllOrders.rejected,(state,action)=>{
+            state.loading=false;
+            state.error=action.payload?.message||"Failed to fetch order";
+        }),
+        // get order details
+            builder.addCase(getOrderDetails.pending,(state)=>{
+            state.loading=true;
+            state.error=null;
+        })
+        .addCase(getOrderDetails.fulfilled,(state,action)=>{
+            state.loading=false;
+            state.orders=action.payload.order;
+            state.success=action.payload.success;
+        })
+        .addCase(getOrderDetails.rejected,(state,action)=>{
             state.loading=false;
             state.error=action.payload?.message||"Failed to fetch order";
         })
