@@ -27,7 +27,7 @@ export const getAllOrders = createAsyncThunk('order/getAllOrders', async(_, {rej
      catch(error){
         return rejectWithValue(error.response?.data||"failed to fetch order");
     }
-}),
+})
 //get order details
 export const getOrderDetails = createAsyncThunk('order/getOrderDetails', async(orderID, {rejectWithValue})=>{
     try{
