@@ -29,3 +29,19 @@ a {
 a:focus:not(:focus-visible) {
     outline: none;
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+background-color: #FAF9FF; 
+  
+  /* A microscopic mesh gradient that feels bright, clean, and high-end */
+  background-image: 
+    radial-gradient(at 0% 0%, #F5F0FF 0px, transparent 60%),   /* Softest whisper lilac */
+    radial-gradient(at 100% 0%, #ebe2fd 0px, transparent 60%), /* Very gentle pastel tint */
+    radial-gradient(at 50% 50%, #FFFFFF 0px, transparent 50%), /* Pure white middle fade for text readability */
+    radial-gradient(at 0% 100%, #FAF8FF 0px, transparent 60%),
+    radial-gradient(at 100% 100%, #F4EEFF 0px, transparent 60%);
+  /* Keeps the glow centered fixed on the screen while scrolling */
+  background-attachment: fixed; 
+}
