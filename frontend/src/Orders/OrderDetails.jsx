@@ -35,7 +35,10 @@ const{
     itemPrice,
     paidAt
 }=order;
-
+const paymentStatus =  paymentInfo.status === 'succeeded' ? 'Paid' : 'Not Paid';
+const finalOrderStatus = paymentStatus=== 'Not Paid'? 'cancelled' :orderStatus;
+const orderStatusClass= finalOrderStatus === 'Delivered' ? 'status-tag delivered' : `status-tag ${finalOrderStatus.toLowerCase()}`;
+const paymentStatusClass=`pay-tag ${paymentStatus=== 'Paid' ? 'paid' : 'not-paid'}`;
   return (
  <>
  <PageTitle title={orderId}/>
@@ -88,13 +91,13 @@ const{
                     <tr className='table-row'>
                         <th className='table-cell'>Order Status</th>
                         <td className='table-cell'>
-                            <span className='status-tag processing'>Processing</span>
+                            <span className= {orderStatusClass}>{finalOrderStatus}</span>
                         </td>
                     </tr>
                     <tr className='table-row'>
                         <th className='table-cell'>Payment Status</th>
                         <td className='table-cell'>
-                        <span className='pay-tag paid'>PAID</span>
+                        <span className={paymentStatusClass}>{paymentStatus}</span>
                         </td>
                     </tr>
                     {paidAt &&( <tr className='table-row'>
