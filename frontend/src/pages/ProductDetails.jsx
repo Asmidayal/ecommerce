@@ -9,20 +9,23 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { getProductDetails } from '../features/productSlice';
-import { removeErrors } from '../features/productSlice';
+import { removeErrors} from '../features/productSlice';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 import { addItemsToCart, removeMessage } from '../features/cart/CartSlice';
+import { createReview } from '../features/productSlice';
+import { removeSuccess } from '../features/productSlice';
 
 
 const ProductDetails = () => {
   
         const[userRating, setUserRating] = useState(0);
         const[quantity,setQuantity]=useState(1);
+        const[comment,setComment]=useState('');
         const handleRatingChange = (newRating) => {
             setUserRating(newRating);
             } 
-          const{loading,error,product} = useSelector((state)=>state.product);
+          const{loading,error,product,reviewSuccess,reviewLoading} = useSelector((state)=>state.product);
           const{loading:cartLoading,error:cartError,success,message,cartItems}= useSelector((state)=>state.cart);
           console.log(cartItems);
           const dispatch=useDispatch();
@@ -49,29 +52,29 @@ const ProductDetails = () => {
                   },[dispatch,cartError])
                   
                    useEffect(()=>{
-                  if(success){
-                      toast.error(message,{autoClose:3000});
+                  if(message){
+                      toast.success(message,{autoClose:3000});
                       dispatch(removeMessage()); //dispatching action to remove error from state after showing error message
                   }
-                  },[dispatch,message,success])
-                  if(loading){
-                    return(
-                        <>
-                        <Navbar/>
-                        <Loader/>
-                        <Footer/>
-                        </>
-                    )
-                  }
-                  if(error|| !product){
-                    return(
-                        <>
-                         <PageTitle title='Product Details-LeaBeauty'/>
-                            <Navbar/>
-                        <Footer/>
-                        </>  
-                    )
-                  }
+                  },[dispatch,message])
+                //  if(loading){
+                  //  return(
+                    //    <>
+                       // <Navbar/>
+                       // <Loader/>
+                       // <Footer/>
+                       // </>
+                    //)
+                 // }
+                 // if(error|| !product){
+                  //  return(
+                     //   <>
+                       //  <PageTitle title='Product Details-LeaBeauty'/>
+                       //     <Navbar/>
+                      //  <Footer/>
+                      //  </>  
+                  //  )
+                  //}
                   const decreaseQuantity=()=>{
                     if(quantity<=1){
                          toast.error('quantity cannot be less than 1',{position:'top-center',autoClose:3000});
@@ -91,6 +94,44 @@ const ProductDetails = () => {
                   const addToCart=()=>{
                     dispatch(addItemsToCart({id,quantity}))
                   }
+                  const handleReviewSubmit=(e)=>{
+                    e.preventDefault();
+                     console.log('submit fired', userRating, comment); 
+                 if(!userRating){
+                    toast.error('Please provide a rating',{position:'top-center',autoClose:3000});
+                    return;
+                 }
+                 dispatch(createReview({rating:userRating,comment,productId:id}));
+
+                  }
+                  useEffect(()=>{
+                    if(reviewSuccess){
+                        toast.success('Review submitted successfully',{position:'top-center',autoClose:3000});
+                        dispatch(removeSuccess());
+                        setUserRating(0);
+                        setComment('');
+                       // dispatch(removeSuccess());
+                        dispatch(getProductDetails(id));
+                    }
+                },[dispatch,reviewSuccess,id])
+                  if(loading){
+                    return(
+                        <>
+                        <Navbar/>
+                        <Loader/>
+                        <Footer/>
+                        </>
+                    )
+                  }
+                  if(error|| !product){
+                    return(
+                        <>
+                         <PageTitle title='Product Details-LeaBeauty'/>
+                            <Navbar/>
+                        <Footer/>
+                        </>  
+                    )
+                  }
         
           return (
    <>
@@ -99,7 +140,7 @@ const ProductDetails = () => {
    <div className='product-details-container'>
     <div className='product-detail-container'>
         <div className='product-image-container'>
-            <img src={product.image[0].url.replace('./','/')} alt=""className='product-detail-image'></img>
+            <img src={product.image[0].url.replace('./','/')} alt="" className='product-detail-image'></img>
             </div>
             <div className='product-info'>
                 <h2>{product.name}</h2>
@@ -122,15 +163,17 @@ const ProductDetails = () => {
                 <button className='add-to-cart-btn'onClick={addToCart} disabled={cartLoading}>{cartLoading?'Adding':'Add to Cart'}
                 </button>
                 </>)}
-                <form className='review-form'>
+                <form className='review-form' onSubmit={handleReviewSubmit}>
                     <h3>Write a Review</h3>
                     <Rating
-                    value={0} 
+                    value={userRating} 
                     disabled={false}
                     onRatingChange={handleRatingChange}
                     />
-                    <textarea className='review-input' placeholder='Write your review here'></textarea>
-                    <button className='submit-review-btn'>Submit Review</button>
+                    <textarea className='review-input' placeholder='Write your review here' value={comment} onChange={(e)=>setComment(e.target.value)} required></textarea>
+                    <button type='submit' className='submit-review-btn' disabled={reviewLoading} >
+                       {reviewLoading ? 'Submitting...' : 'Submit Review'}
+                    </button>
                 </form>
             </div>
     </div>
