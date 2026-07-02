@@ -23,6 +23,7 @@ import PaymentSuccess from './cart/PaymentSuccess';
 import MyOrders from './Orders/MyOrders';
 import OrderDetails from './Orders/OrderDetails';
 import Dashboard from './Admin/Dashboard';
+import ProductList from './Admin/ProductList';
 
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
@@ -59,6 +60,7 @@ console.log(isAuthenticated,user);
                           <Route path ="/orders/user" element={<ProtectedRoute element={<MyOrders/>}/>}/>
                           <Route path ="/order/:orderId" element={<ProtectedRoute element={<OrderDetails/>}/>}/>
                           <Route path ="/admin/dashboard" element={<ProtectedRoute  element={<Dashboard/>} adminOnly={true}/>}/>
+                           <Route path ="/admin/products" element={<ProtectedRoute element={<ProductList/>} adminOnly={true}/>}/>
   </Routes> 
   
   {isAuthenticated && <UserDashboard user={user}/>}
