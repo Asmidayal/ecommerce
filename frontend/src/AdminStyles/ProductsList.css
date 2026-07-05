@@ -63,18 +63,19 @@
   }
   
   .edit-icon:hover {
-    background-color: rgba(0, 123, 255, 0.1);
+    background-color: #f4c2f81a;
+    color: #601170;
   }
   
   .delete-icon {
-    color: #f7364a;
+    color: #d856f8;
     border:none;
     background-color: transparent;
   }
   
   .delete-icon:hover {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: #f66675;
+    background-color: rgba(228, 194, 239, 0.1);
+    color: #601170;
   }
   .no-admin-products{
     text-align: center;
