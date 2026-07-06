@@ -39,7 +39,15 @@ export const getOrderDetails = createAsyncThunk('order/getOrderDetails', async(o
         return rejectWithValue(error.response?.data||"failed to fetch order");
     }
 });
-
+// charts fetching revenue by month
+export const getRevenueByMonth = createAsyncThunk('order/getRevenueByMonth', async(_, {rejectWithValue})=>{
+    try{
+        const {data} = await axios.get('/api/v1/admin/revenue');
+        return data;
+    } catch(error){
+        return rejectWithValue(error.response?.data||"failed to fetch revenue data");
+    }
+});
 const orderSlice = createSlice({
     name:'order',
     initialState:{
@@ -48,6 +56,9 @@ const orderSlice = createSlice({
         loading:false,
         orders:[],
         order:{},
+        revenueLoading:false,
+        
+        revenueData:[],
     },
     reducers:{
         removeErrors:(state)=>{
@@ -99,6 +110,19 @@ const orderSlice = createSlice({
         .addCase(getOrderDetails.rejected,(state,action)=>{
             state.loading=false;
             state.error=action.payload?.message||"Failed to fetch order";
+        }),
+        // get revenue by month
+        builder.addCase(getRevenueByMonth.pending,(state)=>{
+            state.revenueLoading=true;
+            state.error=null;
+        })
+        .addCase(getRevenueByMonth.fulfilled,(state,action)=>{
+            state.revenueLoading=false;
+            state.revenueData=action.payload;
+        })
+        .addCase(getRevenueByMonth.rejected,(state,action)=>{
+            state.revenueLoading=false;
+            state.revenueError=action.payload?.message||"Failed to fetch revenue data";
         })
     ]
 });

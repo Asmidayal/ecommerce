@@ -105,3 +105,23 @@ export const deleteOrder= handleAsyncErrors(async (req,res,next) => {
         message:"order deleted successfully"
     })
 })
+// charts
+export const getRevenueByMonth=async (req,res)=>{
+    try{
+        const data= await Order.aggregate([
+            {$group:{
+                _id:{$month:"$createdAt"},
+                revenue:{$sum:"$totalPrice"}
+    }},
+    {$sort:{_id:1}},
+]);
+const monthNames=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+res.status(200).json(data.map(d=>({
+    month:monthNames[d._id-1],
+    revenue:d.revenue
+})));
+        
+    }catch(error){
+        res.status(500).json({error:error.message});
+    }
+};

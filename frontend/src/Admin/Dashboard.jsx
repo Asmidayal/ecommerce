@@ -1,5 +1,6 @@
 import React from 'react'
 import '../AdminStyles/Dashboard.css'
+
 import{
     Dashboard as DashboardIcon,
     Inventory,
@@ -12,8 +13,18 @@ import PageTitle from '../components/PageTitle'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { getRevenueByMonth } from '../features/order/orderSlice'
+import {LineChart,BarChart,Line,Bar,XAxis,YAxis,Tooltip,CartesianGrid,ResponsiveContainer} from 'recharts'
 
 const Dashboard = () => {
+    const dispatch=useDispatch();
+    const {revenueData,revenueLoading}=useSelector((state)=>state.order);
+    useEffect(()=>{
+        dispatch(getRevenueByMonth());
+    },[dispatch]);
   return (
     <>
     <PageTitle title="Admin Dashboard"/>
