@@ -104,6 +104,21 @@ const Dashboard = () => {
             <p>20</p>
         </div>
     </div>
+    {/*chart section*/}
+    <div className='chart-section'>
+        <div className='chart-box'>
+            <h3>Revenue Overview</h3>
+            <ResponsiveContainer width="100%" aspect={4}>
+                <LineChart data={revenueData} margin={{top:5,right:30,left:20,bottom:25}}>
+                    <CartesianGrid strokeDasharray="3 3"/>
+                    <XAxis dataKey="month"/>
+                    <YAxis domain={[0, 'auto']}/>
+                    <Tooltip/>
+                    <Line type="monotone" dataKey="revenue" stroke="#bf50eb" activeDot={{r:8}}/>
+                </LineChart>
+            </ResponsiveContainer>
+            </div>
+        </div>
     </div>
         </div>
     <Navbar/>

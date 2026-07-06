@@ -106,6 +106,7 @@
   
   .stat-box:hover {
     transform: translateY(-5px);
+    box-shadow:  0 2px 15px #d9c5f3;;
   }
   
   .stat-box .icon {
@@ -116,7 +117,7 @@
   
   .stat-box h3 {
     margin: 10px 0;
-    color: #666;
+    color: #666666;
     font-size: 0.9rem;
     font-weight: 500;
   }
@@ -145,6 +146,7 @@
   
   .social-box:hover {
     transform: translateY(-5px);
+    
   }
   
   .social-box .MuiSvgIcon-root {
@@ -164,7 +166,7 @@
     color: #FF0000;
   }
   
-  .social-box h3 {
+ /* .social-box h3 {
     margin: 15px 0;
     color: #333;
     font-size: 1.2rem;
@@ -175,8 +177,32 @@
     color: #666;
     margin: 8px 0;
     font-size: 1rem;
+  }*/
+  .chart-section h3{
+    
+    margin-bottom: 11px;
+    padding: 4px;
+    
   }
-  
+  .chart-box{
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    margin-top:20px;
+    
+
+  }
+ 
+  .chart-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 2px 15px #dfccf9;
+  }
+  .dashboard-container{
+    font-family :'Poppins','Inter',sans-serif;
+   
+  }
   @media (max-width: 768px) {
     .sidebar {
       width: 100%;
