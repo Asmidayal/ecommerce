@@ -30,7 +30,7 @@ const Products = () => {
     const pageFromURL=parseInt(searchParams.get('page'),10) || 1;
     const [currentPage, setCurrentPage] = useState(pageFromURL);
      const navigate=useNavigate();
-     const categories=['Lipsticks','Eyes','Face','Skincare'];
+     const categories=['Lipsticks','Eyes','Face','Nails'];
     
      useEffect(()=>{
             dispatch(getProduct({keyword, page:currentPage,category})); //fetching products when home component mounts

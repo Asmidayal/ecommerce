@@ -2,13 +2,36 @@ import Product from '../models/productModel.js'
 import handleError from "../utils/handleError.js";
 import handleAsyncErrors from '../middlewares/handleAsyncErrors.js';
 import APIFunctionality from '../utils/apiFunctionality.js';
+import {v2 as cloudinary} from 'cloudinary';
 
 
 
 export const createProducts=handleAsyncErrors(async (req, res,next) =>{
   //console.log(req.body);
- req.body.user= req.user.id;
- //console.log(req.user);
+ 
+  let images = [];
+  if (req.body.images) {
+    if (typeof req.body.images === "string") {
+      images.push(req.body.images);
+    } else {
+      images = req.body.images;
+    }
+  }
+
+  const imagesLinks = [];
+  for (let i = 0; i < images.length; i++) {
+    const result = await cloudinary.uploader.upload(images[i], {
+      folder: "products",
+    });
+    imagesLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+
+  req.body.image = imagesLinks;
+ 
+  req.body.user= req.user.id;
  const product= await Product.create(req.body);
  res.status(201).json({
     success:true,

@@ -41,7 +41,7 @@ const ProductList = () => {
                   { products.map((product,index)=>(
                     <tr>
                          <td>{index + 1}</td>
-                         <td><img src={product.image} alt="Product Image"/></td>
+                         <td><img src={product.image?.[0].url} alt="Product Image" className='admin-product-image'/></td>
                          <td>{product.name}</td>
                         <td>{product.price}</td>
                         <td>{product.ratings}</td>
