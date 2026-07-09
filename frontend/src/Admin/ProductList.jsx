@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchAdminProducts } from '../features/admin/adminSlice'
+import { toast } from 'react-toastify'
+import { removeErrors } from '../features/admin/adminSlice'
+import Loader from '../components/Loader'
 
 const ProductList = () => {
     const {products,loading,error} = useSelector((state)=>state.admin);
@@ -16,9 +19,23 @@ const ProductList = () => {
     useEffect(()=>{
         dispatch(fetchAdminProducts());
     },[dispatch])
-
+    useEffect(()=>{
+        if(error){
+            toast.error(error,{autoClose:3000});
+            dispatch(removeErrors()); //dispatching action to remove error from state after showing error message
+        }
+    },[dispatch,error])
+if(!products || products.length===0){
+    return(
+        <div className="product-list-container">
+            <h1 className="product-list-title">Admin Products</h1>
+            <p className="no-admin-products">No Products Found</p>
+        </div>
+    )
+}
   return (
-  <>
+    <>
+ {loading?(<Loader/>):(<>
   <Navbar/>
   <PageTitle title="All Products"/>
   <div className="product-list-container">
@@ -47,16 +64,17 @@ const ProductList = () => {
                         <td>{product.ratings}</td>
                          <td>{product.category}</td>
                          <td>{product.stock}</td>
-                        <td>{product.createdAt}</td>
+                        <td>{new Date(product.createdAt).toLocaleString()}</td>
                          <td>
-                            <Link to ='/admin/products/:productId' className='action-icon edit-icon'><Edit/></Link>
-                               <Link to ='/admin/products/:productId' className='action-icon delete-icon'><Delete/></Link>
+                            <Link to ={`/admin/products/${product._id}`} className='action-icon edit-icon'><Edit/></Link>
+                               <Link to ={`/admin/products/${product._id}`} className='action-icon delete-icon'><Delete/></Link>
                          </td>
                         </tr> 
   ))  }
                     </tbody>
                 </table>
             </div>
+  </>)}
   </>
   )
 }
