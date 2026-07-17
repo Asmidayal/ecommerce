@@ -29,7 +29,7 @@ const Pagination = ({
         currentPage>1 &&(
             <>
             <button className='pagination-btn' onClick={()=>onPageChange(1)}>{firstPageText}</button>
-            <button className='pagination-btn' onClick={()=>onPageChange(currentPage-1)}>{prevPageText}</button>
+           { /* <button className='pagination-btn' onClick={()=>onPageChange(currentPage-1)}>{prevPageText}</button> */ }
             </>
         )
        }
@@ -45,7 +45,7 @@ const Pagination = ({
        {
         currentPage<totalPages &&(
             <>
-            <button className='pagination-btn' onClick={()=>onPageChange(currentPage+1)}>{nextPageText}</button>
+          { /* <button className='pagination-btn' onClick={()=>onPageChange(currentPage+1)}>{nextPageText}</button> */ }
             <button className='pagination-btn' onClick={()=>onPageChange(totalPages)}>{lastPageText}</button>
             </>
         )

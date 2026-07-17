@@ -3,8 +3,15 @@ import '../AdminStyles/CreateProduct.css'
 import Navbar from '../components/Navbar'
 import PageTitle from '../components/PageTitle'
 import Footer from '../components/Footer'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { createProducts, removeErrors , removeSuccess } from '../features/admin/adminSlice'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 const CreateProduct = () => {
+    const {success,error,loading}=useSelector((state)=>state.admin);
+    const dispatch=useDispatch();
     const [Name, setName] = React.useState('');
     const [Price, setPrice] = React.useState('');
     const [Description, setDescription] = React.useState('');
@@ -24,7 +31,7 @@ const CreateProduct = () => {
         Image.forEach((img) => {
             myForm.append('images', img);
         });
-         
+         dispatch (createProducts(myForm));
     }
       const createProductImage=(e)=>{
             const files=Array.from(e.target.files);
@@ -42,6 +49,16 @@ const CreateProduct = () => {
                 reader.readAsDataURL(file);
              });
         }   
+        useEffect(()=>{
+            if(error){
+                toast.error(error,{position:'top-center',autoClose:3000});
+                dispatch(removeErrors());
+            }
+            if(success){
+                toast.success("Product Created Successfully",{position:'top-center',autoClose:3000});
+                dispatch(removeSuccess());
+            }
+            },[])
   return (
    <>
    <Navbar/>
