@@ -57,6 +57,13 @@ const CreateProduct = () => {
             if(success){
                 toast.success("Product Created Successfully",{position:'top-center',autoClose:3000});
                 dispatch(removeSuccess());
+                setName('');
+                setPrice('');
+                setDescription('');
+                setCategory('');
+                setStock('');
+                setImage([]);
+                setImagePreview([]);
             }
             },[])
   return (
