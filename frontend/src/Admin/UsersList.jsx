@@ -3,6 +3,8 @@ import '../AdminStyles/UsersList.css'
 import Navbar from '../components/Navbar'
 import PageTitle from '../components/PageTitle'
 import Footer from '../components/Footer'
+import { Link } from 'react-router'
+import {Delete , Edit } from '@mui/icons-material'
 
 const UsersList = () => {
   return (
