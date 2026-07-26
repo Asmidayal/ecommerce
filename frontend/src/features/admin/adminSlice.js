@@ -30,6 +30,45 @@ export const createProducts = createAsyncThunk('admin/createProducts', async (pr
         return rejectWithValue(error.response?.data || "Error While Creating the product");
     }
 });
+//update product
+export const updateProduct = createAsyncThunk('admin/updateProduct', async ({ id, formData }, { rejectWithValue }) => {
+    try {
+          const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        }
+       
+      const   { data } = await axios.put(`/api/v1/admin/product/${id}`, formData,config);
+        
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || "Error While updating the product");
+    }
+});
+// delete product
+export const deleteProduct = createAsyncThunk('admin/deleteProduct', async ({ productId}, { rejectWithValue }) => {
+    try {
+      
+       
+      const   { data } = await axios.delete(`/api/v1/admin/product/${productId}`);
+        
+        return {productId};
+    } catch (error) {
+        return rejectWithValue(error.response?.data || "Error While deleting the product");
+    }
+})
+//Fetch All Users
+export const fetchUsers=createAsyncThunk('admin/fetchUsers',async(_,
+{rejectWithValue})=>{
+    try{
+
+        const {data}=await axios.get(`/api/v1/admin/users`)
+        return data;
+    }catch(error){
+        return rejectWithValue(error.response?.data || "Fetching products Failed")
+    }
+})
 const adminSlice = createSlice({
     name:'admin',
     initialState:{
@@ -37,6 +76,9 @@ const adminSlice = createSlice({
         success:false,
         error:null,
         loading:false,
+        product:{},
+        deleteLoading:false,
+        users:[],
        
 },
 reducers:{
@@ -49,6 +91,7 @@ reducers:{
         state.success=false;
     },
 },
+
 extraReducers:(builder)=>{
     builder
     .addCase(fetchAdminProducts.pending,(state)=>{
@@ -78,7 +121,57 @@ extraReducers:(builder)=>{
         state.loading=false;
         state.error=action.payload?.message || "Error While Creating the product";
     })
+    //update product
+       builder
+    .addCase(updateProduct.pending,(state)=>{
+        state.loading=true;
+        state.error=null;
+    })
+
+   .addCase(updateProduct.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.products = action.payload.products;
+        state.success=action.payload.success;
+    })
+     .addCase(updateProduct.rejected,(state,action)=>{
+        state.loading=false;
+        state.error=action.payload?.message || "Error While updating the product";
+    })
+    // delete product
+     builder
+    .addCase(deleteProduct.pending,(state)=>{
+        state.deleteLoading=true;
+        state.error=null;
+    })
+
+   .addCase(deleteProduct.fulfilled,(state,action)=>{
+        state.deleteLoading=false;
+        state.products = state.products.filter(
+  (product) => product._id !== action.payload.productId
+);
+   })
+     .addCase(deleteProduct.rejected,(state,action)=>{
+        state.deleteLoading=false;
+        state.error=action.payload?.message || "Error While deleting the product";
+    })
+    //fetch users
+      builder
+    .addCase(fetchUsers.pending,(state)=>{
+        state.loading=true;
+        state.error=null;
+    })
+
+   .addCase(fetchUsers.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.users= action.payload.users;
+       
+    })
+     .addCase(fetchUsers.rejected,(state,action)=>{
+        state.loading=false;
+        state.error=action.payload?.message || "Failed to fetch users";
+    })
 }
+
 })
 export const {removeErrors, removeSuccess} = adminSlice.actions;
 export default adminSlice.reducer;

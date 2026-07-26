@@ -123,22 +123,19 @@ await cloudinary.uploader.destroy(product.image[i].public_id);
 }
 //DELETE PRODUCT
 export const deleteProduct= async(req, res,next) => {
-  //const product= await Product.findById(req.params.id);
-    //if(!product){
-    //return res.status(500).json({
-     // success:false,
-     // message:"product not found"
-    //});
-  //}
+
   const product= await Product.findByIdAndDelete(req.params.id);
    if(!product){
     return next(new handleError("product not found", 404));
-    //
-    return res.status(500).json({
-      success:false,
-      message:"product not found"
-    });//
+   
+  //  return res.status(500).json({
+     // success:false,
+     // message:"product not found"
+   // });
   }
+  for (let i = 0; i < product.image.length; i++) {
+  await cloudinary.v2.uploader.destroy(product.image[i].public_id);
+}
    res.status(200).json({
     success:true,
     message:"product deleted successfully"

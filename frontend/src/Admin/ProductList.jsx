@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchAdminProducts } from '../features/admin/adminSlice'
 import { toast } from 'react-toastify'
-import { removeErrors } from '../features/admin/adminSlice'
+import { removeErrors, removeSuccess } from '../features/admin/adminSlice'
 import Loader from '../components/Loader'
 
 const ProductList = () => {
@@ -33,6 +33,21 @@ if(!products || products.length===0){
         </div>
     )
 }
+const handleDelete = (productId) => {
+  const isConfirmed = window.confirm('Are you sure you want to delete this product?');
+  if (isConfirmed) {
+    dispatch(deleteProduct(productId)).then((action) => {
+      if (action.type === 'admin/deleteProduct/fulfilled') {
+        toast.success("Product Deleted Successfully", {
+          position: 'top-center',
+          autoClose: 3000
+        });
+        dispatch(removeSuccess());
+      }
+    });
+  }
+};
+
   return (
     <>
  {loading?(<Loader/>):(<>
@@ -67,7 +82,7 @@ if(!products || products.length===0){
                         <td>{new Date(product.createdAt).toLocaleString()}</td>
                          <td>
                             <Link to ={`/admin/products/${product._id}`} className='action-icon edit-icon'><Edit/></Link>
-                               <Link to ={`/admin/products/${product._id}`} className='action-icon delete-icon'><Delete/></Link>
+                            <button className="action-icon delete-icon" onClick={() => handleDelete(product._id)}><Delete/></button>
                          </td>
                         </tr> 
   ))  }

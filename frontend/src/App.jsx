@@ -26,6 +26,7 @@ import Dashboard from './Admin/Dashboard';
 import ProductList from './Admin/ProductList';
 import CreateProduct from './Admin/CreateProduct';
 import UpdateProduct from './Admin/UpdateProduct';
+import UsersList from './Admin/UsersList';
 
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
@@ -65,6 +66,7 @@ console.log(isAuthenticated,user);
                            <Route path ="/admin/products" element={<ProtectedRoute element={<ProductList/>} adminOnly={true}/>}/>
     <Route path ="/admin/product/create" element={<ProtectedRoute element={<CreateProduct/>} adminOnly={true}/>}/>
     <Route path ="/admin/products/:UpdateId" element={<ProtectedRoute element={<UpdateProduct/>} adminOnly={true}/>}/>
+   <Route path ="/admin/users" element={<ProtectedRoute element={<UsersList/>} adminOnly={true}/>}/>
   
   </Routes>
   {isAuthenticated && <UserDashboard user={user}/>}
