@@ -5,11 +5,33 @@ import PageTitle from '../components/PageTitle'
 import Footer from '../components/Footer'
 import { Link } from 'react-router'
 import {Delete , Edit } from '@mui/icons-material'
+import {fetchUsers, removeErrors} from '../features/admin/adminSlice'
+import Loader from '../components/Loader'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+
+import { toast } from 'react-toastify'
+
 
 const UsersList = () => {
+  const { users, loading, error } = useSelector((state) => state.admin);
+const dispatch = useDispatch();
+
+useEffect(() => {
+  dispatch(fetchUsers());
+}, [dispatch]);
+useEffect(()=>{
+if(error){
+  toast.error(error,{position :'top-center' ,autoclose:3000})
+  dispatch(removeErrors())
+}
+},[error,dispatch])
+
   return (
     <>
-  <Navbar/>
+ {loading?(<Loader/>):(  <>
+ <Navbar/>
   <PageTitle title='all users'/>
   <div className="usersList-container">
   <h1 className="usersList-title">All Users</h1>
@@ -21,28 +43,33 @@ const UsersList = () => {
       <th>Name</th>
       <th>Email</th>
       <th>Role</th>
-      <th>CreatedAt</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-        <td>1</td>
-         <td>Asmi</td>
-          <td>asmidayal15@gmail.com</td>
-           <td>admin</td>
-            <td>25-5-26</td>
+    
+ {users.map((user,index)=>(
+   <tr key={user._id}>
+        <td>{index+1}</td>
+         <td>{user.name}</td>
+          <td>{user.email}</td>
+           <td>{user.role}</td>
+            
              <td>
-                <Link to="/admin/user/:userId" className='action-icon edit-icon'><Edit/></Link>
+                <Link to={`/admin/user/${user._id}`} className='action-icon edit-icon'><Edit/></Link>
                 <button className='action-icon delete-icon'><Delete/></button>
              </td>
     </tr>
+ ))  
+}
   </tbody>
 </table>
   </div>
 </div>
   <Footer/>
   </>
+) }
+</>
   )
 }
 

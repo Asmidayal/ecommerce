@@ -69,6 +69,20 @@ export const fetchUsers=createAsyncThunk('admin/fetchUsers',async(_,
         return rejectWithValue(error.response?.data || "Fetching products Failed")
     }
 })
+ // Get single user
+export const getSingleUser = createAsyncThunk(
+  'admin/getSingleUser',
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/v1/admin/user/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Failed to fetch the user"
+      )
+    }
+    })
+  
 const adminSlice = createSlice({
     name:'admin',
     initialState:{
@@ -79,6 +93,7 @@ const adminSlice = createSlice({
         product:{},
         deleteLoading:false,
         users:[],
+        user:{}
        
 },
 reducers:{
@@ -170,6 +185,25 @@ extraReducers:(builder)=>{
         state.loading=false;
         state.error=action.payload?.message || "Failed to fetch users";
     })
+ //fetch single user
+      builder
+    .addCase(getSingleUser.pending,(state)=>{
+        state.loading=true;
+        state.error=null;
+    })
+
+   .addCase(getSingleUser.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.user= action.payload.user;
+       
+    })
+     .addCase(getSingleUser.rejected,(state,action)=>{
+        state.loading=false;
+        state.error=action.payload?.message || "Failed to fetch the user";
+    })
+
+  
+
 }
 
 })
