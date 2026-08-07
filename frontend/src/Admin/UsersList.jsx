@@ -5,18 +5,20 @@ import PageTitle from '../components/PageTitle'
 import Footer from '../components/Footer'
 import { Link } from 'react-router'
 import {Delete , Edit } from '@mui/icons-material'
-import {fetchUsers, removeErrors} from '../features/admin/adminSlice'
+import {fetchUsers, removeErrors, clearMessage,deleteUser} from '../features/admin/adminSlice'
 import Loader from '../components/Loader'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { toast } from 'react-toastify'
 
 
 const UsersList = () => {
-  const { users, loading, error } = useSelector((state) => state.admin);
+  const { users, loading, error, message } = useSelector((state) => state.admin);
 const dispatch = useDispatch();
+const navigate = useNavigate();
 
 useEffect(() => {
   dispatch(fetchUsers());
@@ -28,6 +30,22 @@ if(error){
 }
 },[error,dispatch])
 
+const handleDelete = (userId) => {
+  if (window.confirm("Are you sure you want to delete this user?")) {
+    dispatch(deleteUser(userId));
+  }
+}
+useEffect(() => {
+  if (error) {
+    toast.error(error, { position: 'top-center', autoClose: 3000 });
+    dispatch(removeErrors());
+  }
+  if (message) {
+    toast.success(message, { position: 'top-center', autoClose: 3000 });
+    dispatch(clearMessage());
+    navigate('/admin/dashboard'); // Navigate to the users list page after deletion
+  }
+}, [dispatch, error,message]);
   return (
     <>
  {loading?(<Loader/>):(  <>
@@ -57,7 +75,7 @@ if(error){
             
              <td>
                 <Link to={`/admin/user/${user._id}`} className='action-icon edit-icon'><Edit/></Link>
-                <button className='action-icon delete-icon'><Delete/></button>
+                <button className='action-icon delete-icon' onClick={() => handleDelete(user._id)}><Delete/></button>
              </td>
     </tr>
  ))  

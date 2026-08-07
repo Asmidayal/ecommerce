@@ -216,6 +216,8 @@ export const getSingleUser= handleAsyncErrors(async(req,res,next)=>{
     })
     //Admin-deleting user profile
  export const deleteUser= handleAsyncErrors(async(req,res,next)=>{
+    const imageId = user.avatar.public_id;
+await cloudinary.uploader.destroy(imageId);
 const user =await User.findById(req.params.id);
 if(!user){
   return next(new handleError("user doesnt exist",400))
