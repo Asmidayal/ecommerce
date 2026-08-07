@@ -23,6 +23,16 @@ const OrdersList = () => {
                             <th>Actions</th>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
         </div>
