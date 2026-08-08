@@ -84,7 +84,8 @@ order.orderStatus=req.body.status;
 async function updateQuantity(id,quantity){
     const product= await Product.findById(id);
     if(!product){
-          return next(new handleError("product not found", 404)); 
+        throw new handleError("product not found", 404); 
+        //  return next(new handleError("product not found", 404)); 
     }
     product.stock-=quantity;
     await product.save({validateBeforeSave:false});
