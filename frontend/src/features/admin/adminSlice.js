@@ -147,6 +147,20 @@ const config={
         return rejectWithValue(error.response?.data || "Failed to Update Order Status")
     }
 })   
+//Fetch All Reviews
+export const fetchProductReviews = createAsyncThunk(
+  'admin/fetchProductReviews',
+  async (productId, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/v1/reviews?id=${productId}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch reviews"
+      );
+    }
+  }
+);
 const adminSlice = createSlice({
     name:'admin',
     initialState:{
@@ -160,7 +174,8 @@ const adminSlice = createSlice({
         user:{},
         message:null,
         orders:[],
-        totalAmount:0
+        totalAmount:0,
+        reviews:[]
        
 },
 reducers:{
@@ -352,7 +367,22 @@ extraReducers:(builder)=>{
         state.loading=false;
         state.error=action.payload?.message || "Failed to update order status";
     })
+ //update reviews
+       builder
+    .addCase(fetchProductReviews.pending,(state)=>{
+        state.loading=true;
+        state.error=null;
+    })
 
+   .addCase(fetchProductReviews.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.products = action.payload.products;
+        state.reviews=action.payload.reviews;
+    })
+     .addCase(fetchProductReviews.rejected,(state,action)=>{
+        state.loading=false;
+        state.error=action.payload?.message || "Failed to fetch product reviews";
+    })
 }
 
 })
