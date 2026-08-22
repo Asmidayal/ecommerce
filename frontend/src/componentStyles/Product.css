@@ -86,7 +86,7 @@
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  color: var(--bg-primary);
+  color: var(--primary-dark);
    min-height: 2.8rem;           /* reserves space for 2 lines */
   display: -webkit-box;
   -webkit-line-clamp: 2;

@@ -1,0 +1,146 @@
+.beauty-chat-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: #d63384;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
+.beauty-chat-toggle:hover {
+  background: #c2185b;
+  color:#f0ecec;
+}
+
+.beauty-chat-window {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  width: 380px;
+  max-height: 540px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.beauty-chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #fce4ec;
+  font-weight: 600;
+}
+.beauty-chat-header span {
+  color: #d63384;
+}
+
+.beauty-chat-header button {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.beauty-chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.chat-msg {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  max-width: 92%;
+}
+
+.chat-msg.user {
+  margin-left: auto;
+  background: #fce4ec;
+  color: #d63384;
+  
+}
+.chat-msg.user p{
+    color: #d63384;
+}
+
+.chat-msg.bot {
+  background: #f8f6f6;
+}
+.chat-msg.bot p{
+    color: #7e1f4f;
+}
+
+.chat-products {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-product-card {
+  display: flex;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 8px;
+  background: #fff;
+}
+
+.chat-product-card img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.chat-loading {
+  font-size: 14px;
+  color: #666;
+}
+
+.chat-error {
+  color: #b00020;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.beauty-chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #eee;
+}
+
+.beauty-chat-input input {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.beauty-chat-input button {
+  border: none;
+  background: #d63384;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.beauty-chat-input button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

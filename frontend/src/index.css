@@ -1,21 +1,22 @@
 :root { 
     
     --primary-main: #B983FF; 
-    --primary-dark:  #4E3163;
-    --primary-light: #4E1A3D; 
+    --primary-dark:  #b783df;
+    --primary-light: #594275;
     
     --bg-primary: #c3b5f7; 
     --bg-secondary: #b783df; 
     
-    --text-primary: #5c3777; 
-    --text-secondary:  #6c5a79;
-    --text-light: #6c5a79; 
+    --text-primary: #836d9e; 
+    --text-secondary:  #6B5F7F;
+    --text-light:  #594275;
+    --text-dark: #594275;
     
     --border-color: #B983FF;
     
 
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2); 
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15); 
+    --shadow-sm: 0 2px 8px rgba(78, 49, 99, 0.15); 
+    --shadow-md: 0 4px 6px -1px rgba(78, 49, 99, 0.18); 
 }
 *{
     margin:0;
@@ -33,6 +34,8 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  color: var(--text-primary);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 background-color: #FAF9FF; 
   
   /* A microscopic mesh gradient that feels bright, clean, and high-end */

@@ -11,20 +11,33 @@ import{
 }from '@mui/icons-material'
 import PageTitle from '../components/PageTitle'
 import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { getRevenueByMonth } from '../features/order/orderSlice'
 import {LineChart,BarChart,Line,Bar,XAxis,YAxis,Tooltip,CartesianGrid,ResponsiveContainer} from 'recharts'
-
+import { fetchAdminProducts } from '../features/admin/adminSlice'
+import { fetchAllOrders } from '../features/admin/adminSlice'
 const Dashboard = () => {
     const dispatch=useDispatch();
     const {revenueData,revenueLoading}=useSelector((state)=>state.order);
+const {orders,products,totalAmount}=useSelector((state)=>state.admin);
+
     useEffect(()=>{
         dispatch(getRevenueByMonth());
     },[dispatch]);
+    useEffect(()=>{
+    dispatch(fetchAdminProducts())
+    dispatch(fetchAllOrders())
+},[dispatch])
+const totalProducts=products.length;
+const totalOrders=orders.length;
+const outOfStock=products.filter(product=>product.stock===0).length;
+const inStock=products.filter(product=>product.stock>0).length;
+const totalReviews=products.reduce((acc,product)=>acc+(product.reviews.length||0),0)
+
   return (
     <>
     <PageTitle title="Admin Dashboard"/>
@@ -77,31 +90,31 @@ const Dashboard = () => {
     <div className='stats-grid'>
         <div className='stat-box'>
             <h3>Total Products</h3>
-            <p>4</p>
+            <p>{totalProducts}</p>
         </div>
         <div className='stat-box'>
             <h3>Total Users</h3>
-            <p>10</p>
+            <p>{totalAmount}</p>
         </div>
         <div className='stat-box'>
             <h3>Total Orders</h3>
-            <p>15</p>
+            <p>{totalOrders}</p>
         </div>
         <div className='stat-box'>
             <h3>Total Reviews</h3>
-            <p>20</p>
+            <p>{totalReviews}</p>
         </div>
         <div className='stat-box'>
             <h3>Total Revenue</h3>
-            <p>$5,000</p>
+            <p>{totalAmount}</p>
         </div>
         <div className='stat-box'>
             <h3>Out of Stock</h3>
-            <p>20</p>
+            <p>{outOfStock}</p>
         </div>
         <div className='stat-box'>
             <h3>In Stock</h3>
-            <p>20</p>
+            <p>{inStock}</p>
         </div>
     </div>
     {/*chart section*/}

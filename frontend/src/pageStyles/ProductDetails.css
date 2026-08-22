@@ -49,14 +49,21 @@
     padding: 20px;
     width: 500px;
   }
-  .product-description,.product-price{
+  .product-description{
     text-align: left;
+    color: var(--primary-main);
+    font-weight: 700;
+  }
+  .product-price{
+     text-align: left;
+    color: var(--text-primary);
+    font-weight: 500;
   }
   
   .product-info h2 {
     font-size: 24px;
     margin-bottom: 15px;
-    color: #0F1111;
+    color: var(--text-primary);
   }
   
   .rating {
@@ -144,7 +151,7 @@
   }
   
   .submit-review-btn {
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -153,7 +160,7 @@
   }
   
   .submit-review-btn:hover {
-    background: #374759;
+    background: var(--primary-dark);
   }
   
 

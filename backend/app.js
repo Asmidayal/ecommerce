@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
 import dotenv from 'dotenv';
 import payment from './routes/paymentRoute.js';
+import chat from './routes/chatRoutes.js';
 
 //app.use to use cookie parser middleware
 
@@ -21,6 +22,7 @@ app.use('/api/v1', product);
 app.use('/api/v1', user);
 app.use('/api/v1',order);
 app.use('/api/v1',payment);
+app.use('/api/v1',chat);
 app.use(errorHandleMiddleware);
 dotenv.config({path:'backend/config/config.env'});
 //module.exports = app;
